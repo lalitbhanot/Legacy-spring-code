@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- For giving the path for the Properties file from which the properties will be read  -->
+   <context:property-placeholder location="classpath:sport.properties"/>
+   
+    <!-- Define your beans here -->
+     <bean id ="myFortune"
+    class = "com.lalit.demoXmlConfig.HappyFortuneService">
+    </bean>
+    
+    
+    
+    <bean id ="myCoach"
+    class = "com.lalit.demoXmlConfig.BaseballCoach">
+    <constructor-arg ref ="myFortune"/>
+    </bean>
+    
+    <bean id ="myTrackCoach"
+    class = "com.lalit.demoXmlConfig.TrackCoach">
+    <constructor-arg ref ="myFortune"/>
+    </bean>
+    
+    <bean id="myLoggerConfig" class="com.lalit.demoXmlConfig.MyLoggerConfig" init-method="initLogger">
+    	<property name="rootLoggerLevel" value="FINE" />
+    	<property name="printedLoggerLevel" value="FINE"/>
+    </bean>
+    
+   <bean id ="myFootballCoach"
+    class = "com.lalit.demoXmlConfig.FootballCoach">
+    <property name="fortuneService" ref="myFortune"/>
+    <!-- hardcoded values  --> 
+    <!--<property name="email" value="code@gmial.com"></property>
+    <property name="team" value="New Team "></property>
+    -->
+    <property name="email" value="${foo.email}"></property>
+    <property name="team" value="${foo.team}"></property>
+    
+    
+    </bean>
+    
+    
+</beans>
+
+
+
+
+
